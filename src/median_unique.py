@@ -3,8 +3,8 @@ import itertools
 import heapq
 
 LINES_HOLD_IN_MEM = 1000000
-FILE_OUT = '/tweet_output/ft2.txt'
-FILE_IN = '/tweet_input/tweets.txt'
+FILE_OUT = 'tweet_output/ft2.txt'
+FILE_IN = 'tweet_input/tweets.txt'
 MEDIAN_LIST = []
 
 def get_batch_it(file_name = FILE_IN):
