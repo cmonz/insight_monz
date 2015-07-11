@@ -50,24 +50,6 @@ def write_sorted_batches(batch_it, temp_list):
         temp.seek(0)
 
     return temp_list
-
-
-        
-##        a = time.time()
-##
-##        
-##        for m in group:
-##            median.append(countUnique(m))
-##
-##            f = 0
-##            if len(median) % 2 == 0:
-##                f = (median[len(median) // 2] + median[(len(median) // 2) - 1]) / 2.0
-##            else:
-##                f = median[(len(median) // 2 )]
-##
-##        print time.time() - a
-
-
         
 
 def main():
