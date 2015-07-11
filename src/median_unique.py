@@ -1,13 +1,10 @@
-import tempfile
 import itertools
-import heapq
+import sys
 
 LINES_HOLD_IN_MEM = 1000000
-FILE_OUT = 'tweet_output/ft2.txt'
-FILE_IN = 'tweet_input/tweets.txt'
 MEDIAN_LIST = []
 
-def get_batch_it(file_name = FILE_IN):
+def get_batch_it(file_name):
     file_handle = open(file_name, 'rb')
     it = itertools.groupby(file_handle, key=lambda k,
                            line=itertools.count(): next(line) // LINES_HOLD_IN_MEM)
@@ -19,8 +16,8 @@ def close_file(file_handle):
 def count_unique(line):
     return len(set(line[:-1].split(' ')))
 
-def write_median(batch_it):
-    with open(FILE_OUT, 'w') as fout:
+def write_median(batch_it, file_in):
+    with open(file_in, 'w') as fout:
         for k, group in batch_it:
             for line in group:
                 MEDIAN_LIST.append(count_unique(line))
@@ -33,12 +30,18 @@ def write_median(batch_it):
                 fout.write(str(result) + '\n')
         
 def main():
-
-    batch_it, raw_file_handle = get_batch_it()
-    write_median(batch_it)
+    
+    file_out = 'tweet_output/ft2.txt'
+    file_in = 'tweet_input/tweets.txt'
+    if len(sys.argv) == 3:
+        file_in = sys.argv[1][2:]
+        file_out = sys.argv[2][2:]
+        
+    batch_it, raw_file_handle = get_batch_it(file_in)
+    write_median(batch_it, file_out)
     close_file(raw_file_handle)
 
-    print 'Median calculated in batches and output to ', FILE_OUT
+    print 'Median calculated in batches and output to ', file_out
 
 
 

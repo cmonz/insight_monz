@@ -1,13 +1,11 @@
 import tempfile
 import itertools
 import heapq
+import sys
 
 LINES_HOLD_IN_MEM = 1000000
-FILE_OUT = 'tweet_output/ft1.txt'
-FILE_IN = 'tweet_input/tweets.txt'
 
-
-def get_batch_it(file_name = FILE_IN):
+def get_batch_it(file_name):
     file_handle = open(file_name, 'rb')
     it = itertools.groupby(file_handle, key=lambda k,
                            line=itertools.count(): next(line) // LINES_HOLD_IN_MEM)
@@ -53,15 +51,21 @@ def write_sorted_batches(batch_it, temp_list):
         
 
 def main():
+
+    file_out = 'tweet_output/ft1.txt'
+    file_in = 'tweet_input/tweets.txt'
+    if len(sys.argv) == 3:
+        file_in = sys.argv[1][2:]
+        file_out = sys.argv[2][2:]
     
-    batch_it, raw_file_handle = get_batch_it()
+    batch_it, raw_file_handle = get_batch_it(file_in)
     temp_files = []
     temp_files = write_sorted_batches(batch_it, temp_files)
-    merge_write(FILE_OUT, temp_files)
+    merge_write(file_out, temp_files)
     close_files(temp_files)
     close_file(raw_file_handle)
 
-    print 'Tweets sorted and output to ', FILE_OUT
+    print 'Tweets sorted and output to ', file_out
 
 
 
